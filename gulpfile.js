@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var imagemin = require('gulp-imagemin');
 var cssmin = require('gulp-minify-css');
+var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 var header = require('gulp-header');
 var rename = require('gulp-rename');
@@ -56,6 +57,17 @@ gulp.task('js', function() {
         .pipe(gulp.dest(config.dist + 'js'))
         .pipe(notify({
             message: '压缩js文件完毕',
+            onLast: true
+        }));
+});
+
+// 编译sass
+gulp.task('sass', function() {
+    return gulp.src(config.src + 'sass/*.scss')
+        .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(gulp.dest(config.dist + 'sass'))
+        .pipe(notify({
+            message: '编译压缩sass文件完毕',
             onLast: true
         }));
 });
